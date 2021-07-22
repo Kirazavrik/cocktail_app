@@ -7,15 +7,17 @@ import 'package:http/http.dart' as http;
 
 class NetworkRepository extends CocktailsRepository {
 
-  CocktailEntity entity;
-  Future<List<CocktailEntity>> list;
+  var entity = CocktailEntity();
+
 
   @override
-  Future<List<CocktailEntity>> loadCocktails() async {
+  Future<CocktailEntity> loadRandomCocktail() async {
     final response =
         await http.get(Uri.parse("https://www.thecocktaildb.com/api/json/v1/1/random.php"));
-    if (response.statusCode == 200)
-      entity = CocktailEntity.fromJson(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      return entity.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed');
     }
   }
 

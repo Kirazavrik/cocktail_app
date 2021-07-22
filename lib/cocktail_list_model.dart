@@ -1,4 +1,3 @@
-import 'dart:collection';
 
 import 'package:cocktail_app/cocktails_repository.dart';
 import 'package:cocktail_app/models/cocktail.dart';
@@ -17,17 +16,21 @@ class CocktailListModel extends ChangeNotifier {
     @required this.repository, List<Cocktail> cocktails
   }) : _cocktails = cocktails ?? [];
 
-  Future loadCocktails() {
+  Future loadCocktail() {
+    return repository.loadRandomCocktail().then((loadedCocktails) {
+      Cocktail randCocktail = Cocktail.fromEntity(loadedCocktails);
+      _cocktails.add(randCocktail);
+    }).catchError((onError) {
+    });
+  }
+
+  loadCocktails() async{
     _isLoading = true;
     notifyListeners();
-
-    return repository.loadCocktails().then((loadedCocktails) {
-      _cocktails.addAll(loadedCocktails.map(Cocktail.fromEntity));
-      _isLoading = false;
-      notifyListeners();
-    }).catchError((onError) {
-      _isLoading = false;
-      notifyListeners();
-    });
+    for(var i = 0; i <= 10; i++) {
+      await loadCocktail();
+    }
+    _isLoading = false;
+    notifyListeners();
   }
 }

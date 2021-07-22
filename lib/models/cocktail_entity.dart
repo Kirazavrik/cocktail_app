@@ -2,20 +2,23 @@ class CocktailEntity {
   String id;
   String name;
   String instruction;
-
   List<Drinks> drinks;
 
-  CocktailEntity({this.id, this.name, this.instruction, this.drinks});
+  CocktailEntity({this.id, this.name, this.instruction});
 
-  CocktailEntity.fromJson(Map<String, dynamic> json) {
+  CocktailEntity fromJson(Map<String, dynamic> json) {
     if (json['drinks'] != null) {
       drinks = <Drinks>[];
       json['drinks'].forEach((v) {
         drinks.add(new Drinks.fromJson(v));
       });
     }
+    return CocktailEntity(
+      id: drinks[0].idDrink,
+      name: drinks[0].strDrink,
+      instruction: drinks[0].strInstructions
+    );
   }
-
 
   @override
   int get hashCode =>
@@ -29,7 +32,6 @@ class CocktailEntity {
           id == other.id &&
           name == other.name &&
           instruction == other.instruction;
-
 
 }
 
