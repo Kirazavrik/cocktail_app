@@ -21,4 +21,10 @@ class NetworkRepository extends CocktailsRepository {
     }
   }
 
+  @override
+  Future<CocktailEntity> searchCocktailByName() {
+    // TODO: implement searchCocktailByName
+    throw UnimplementedError();
+  }
+
 }

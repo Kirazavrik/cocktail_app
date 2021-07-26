@@ -13,7 +13,7 @@ class CocktailListModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   CocktailListModel({
-    @required this.repository, List<Cocktail> cocktails
+    required this.repository, List<Cocktail>? cocktails
   }) : _cocktails = cocktails ?? [];
 
   Future loadCocktail() {

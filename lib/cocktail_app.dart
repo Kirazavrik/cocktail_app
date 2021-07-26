@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class CocktailApp extends StatelessWidget {
   final CocktailsRepository repository;
 
-  CocktailApp({@required this.repository});
+  CocktailApp({required this.repository});
 
   @override
   Widget build(BuildContext context) {
