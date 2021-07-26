@@ -8,12 +8,16 @@ class CocktailListModel extends ChangeNotifier {
 
   List<Cocktail> _cocktails;
   List<Cocktail> get cocktails => _cocktails;
+  List<Cocktail> _searchedCocktails = <Cocktail>[];
+  List<Cocktail> get searchedCocktails => _searchedCocktails;
+
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+
   CocktailListModel({
-    required this.repository, List<Cocktail>? cocktails
+    required this.repository, List<Cocktail>? cocktails,
   }) : _cocktails = cocktails ?? [];
 
   Future loadCocktail() {
@@ -21,6 +25,17 @@ class CocktailListModel extends ChangeNotifier {
       Cocktail randCocktail = Cocktail.fromEntity(loadedCocktails);
       _cocktails.add(randCocktail);
     }).catchError((onError) {
+    });
+  }
+
+  Future loadSearchedCocktails(String query) async {
+    _isLoading = true;
+
+    return repository.searchCocktailByName(query).then((searchedCocktails) {
+      _searchedCocktails = Cocktail.fromEntities(searchedCocktails);
+
+      _isLoading = false;
+      notifyListeners();
     });
   }
 

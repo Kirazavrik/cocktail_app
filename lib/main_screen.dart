@@ -1,3 +1,4 @@
+import 'package:cocktail_app/CustomSearchDelegate.dart';
 import 'package:cocktail_app/cocktail_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,13 +8,20 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text("jjj"),
         actions: [
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              showSearch(
+                  context: context,
+                  delegate: CustomSearchDelegate()
+              );
+            },
           )
         ],
       ),

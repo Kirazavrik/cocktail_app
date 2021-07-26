@@ -2,7 +2,8 @@ class CocktailEntity {
   String? id;
   String? name;
   String? instruction;
-  late List<Drinks> drinks;
+  List<Drinks>? drinkss;
+  List<Drinks>? drinks;
   String? ingredient1;
   String? ingredient2;
   String? ingredient3;
@@ -17,25 +18,28 @@ class CocktailEntity {
       this.ingredient2,
       this.ingredient3,
       this.ingredient4,
-      this.thumbnail});
+      this.thumbnail,
+      this.drinks});
 
   CocktailEntity fromJson(Map<String, dynamic> json) {
     if (json['drinks'] != null) {
-      drinks = <Drinks>[];
+      drinkss = <Drinks>[];
       json['drinks'].forEach((v) {
-        drinks.add(new Drinks.fromJson(v));
+        drinkss!.add(new Drinks.fromJson(v));
       });
     }
     return CocktailEntity(
-        id: drinks[0].idDrink,
-        name: drinks[0].strDrink,
-        instruction: drinks[0].strInstructions,
-        ingredient1: drinks[0].strIngredient1,
-        ingredient2: drinks[0].strIngredient2,
-        ingredient3: drinks[0].strIngredient3,
-        ingredient4: drinks[0].strIngredient4,
-        thumbnail: drinks[0].strDrinkThumb);
+        id: drinkss![0].idDrink,
+        name: drinkss![0].strDrink,
+        instruction: drinkss![0].strInstructions,
+        ingredient1: drinkss![0].strIngredient1,
+        ingredient2: drinkss![0].strIngredient2,
+        ingredient3: drinkss![0].strIngredient3,
+        ingredient4: drinkss![0].strIngredient4,
+        thumbnail: drinkss![0].strDrinkThumb,
+    drinks: drinkss);
   }
+
 
   @override
   int get hashCode => id.hashCode ^ name.hashCode ^ instruction.hashCode;

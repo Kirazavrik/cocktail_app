@@ -4,5 +4,5 @@ abstract class CocktailsRepository {
 
   Future<CocktailEntity> loadRandomCocktail();
 
-  Future<CocktailEntity> searchCocktailByName();
+  Future<CocktailEntity> searchCocktailByName(String query);
 }

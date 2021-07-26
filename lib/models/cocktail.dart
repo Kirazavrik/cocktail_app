@@ -9,6 +9,7 @@ class Cocktail {
   final String ingredient3;
   final String ingredient4;
   final String? thumbnail;
+  List<Drinks>? searchedCocktails = <Drinks>[];
 
   Cocktail(
       {required this.id,
@@ -18,7 +19,8 @@ class Cocktail {
       required this.ingredient2,
       required this.ingredient3,
       required this.ingredient4,
-      this.thumbnail});
+      this.thumbnail,
+      this.searchedCocktails});
 
   @override
   String toString() {
@@ -47,6 +49,23 @@ class Cocktail {
       ingredient3: entity.ingredient3 ?? "",
       ingredient4: entity.ingredient4 ?? "",
       thumbnail: entity.thumbnail,
+      searchedCocktails: entity.drinks
     );
   }
+
+  static List<Cocktail> fromEntities(CocktailEntity entity) {
+    List<Cocktail> cocktails = <Cocktail>[];
+    for (var i in entity.drinks!) {
+      cocktails.add(new Cocktail(
+          id: i.idDrink,
+          instruction: i.strInstructions,
+          name: i.strDrink,
+          ingredient1: i.strIngredient1 ?? "",
+          ingredient2: i.strIngredient2 ?? "",
+          ingredient3: i.strIngredient3 ?? "",
+          ingredient4: i.strIngredient4 ?? ""));
+    }
+    return cocktails;
+  }
+
 }
