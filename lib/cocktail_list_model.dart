@@ -15,10 +15,13 @@ class CocktailListModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  bool _isSearchLoading = false;
+  bool get isSearchLoading => _isSearchLoading;
 
   CocktailListModel({
     required this.repository, List<Cocktail>? cocktails,
   }) : _cocktails = cocktails ?? [];
+
 
   Future loadCocktail() {
     return repository.loadRandomCocktail().then((loadedCocktails) {
@@ -28,13 +31,14 @@ class CocktailListModel extends ChangeNotifier {
     });
   }
 
-  Future loadSearchedCocktails(String query) async {
-    _isLoading = true;
+  Future loadSearchedCocktails(String query) {
+    _isSearchLoading = true;
+    notifyListeners();
 
     return repository.searchCocktailByName(query).then((searchedCocktails) {
       _searchedCocktails = Cocktail.fromEntities(searchedCocktails);
 
-      _isLoading = false;
+      _isSearchLoading = false;
       notifyListeners();
     });
   }

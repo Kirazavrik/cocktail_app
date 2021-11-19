@@ -12,13 +12,13 @@ class CustomSearchDelegate extends SearchDelegate {
           onPressed: () {})
     ];
     }
-
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.arrow_back),
       onPressed: () {
         close(context, null);
+        query = '';
       },
     );
   }
@@ -28,11 +28,17 @@ class CustomSearchDelegate extends SearchDelegate {
     return Container(
       child: Consumer<CocktailListModel>(
         builder: (context, model, child) {
-          model.loadSearchedCocktails(query);
-          return Text(model.searchedCocktails[0].name!);
+          loadModels(model, query);
+          return model.isSearchLoading
+              ? LinearProgressIndicator()
+              : Text(model.searchedCocktails[0].name!);
         },
       ),
     );
+  }
+
+  loadModels(CocktailListModel model, String query) async {
+    await model.loadSearchedCocktails(query);
   }
 
   @override
